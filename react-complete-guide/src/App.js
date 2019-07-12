@@ -6,20 +6,9 @@ class App extends Component {
   state = {
     people: [
       {id: '123', name: 'Karan', age: 25},
-      {id: '321', name: 'Max', age: 28}
+      {id: '321', name: 'Max', age: 28},
+      {id: '456', name: 'Person', age: 30}
     ]
-  }
-
-  switchNameHandler = (newName) => {
-    // console.log('Was clicked!');
-    // DONT DO THIS: this.state.people[0].name = 'Karan Thaker';
-    this.setState({
-      people: [
-        {name: newName, age: 25},
-        {name: 'Max', age: 29}
-      ],
-      showPeople: false
-    });
   }
 
   nameChangedHandler = (event, id) => {
@@ -90,10 +79,18 @@ class App extends Component {
       style.backgroundColor = 'red';
     }
 
+    const classes = [];
+    if (this.state.people.length <= 2) {
+      classes.push('red');
+    }
+    if (this.state.people.length <= 1) {
+      classes.push('bold');
+    }
+
     return (
       <div className="App">
         <h1>Hi, I'm a React App.</h1>
-        <p>This is really working!</p>
+        <p className={classes.join(' ')}>This is really working!</p>
         <button 
           style={style}
           onClick={this.togglePeopleHandler}>Toggle People</button>
