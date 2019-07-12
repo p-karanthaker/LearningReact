@@ -5,8 +5,8 @@ import Person from './Person/Person';
 class App extends Component {
   state = {
     people: [
-      {name: 'Karan', age: 25},
-      {name: 'Max', age: 28}
+      {id: '123', name: 'Karan', age: 25},
+      {id: '321', name: 'Max', age: 28}
     ]
   }
 
@@ -22,12 +22,28 @@ class App extends Component {
     });
   }
 
-  nameChangedHandler = event => {
+  nameChangedHandler = (event, id) => {
+    // Find the index of the person by their object id.
+    const personIndex = this.state.people.findIndex(p => {
+      return p.id === id;
+    });
+
+    // Copy the person from the state array object.
+    const person = {
+      ...this.state.people[personIndex]
+    }
+
+    // Edit the person's name based on the event value.
+    person.name = event.target.value;
+
+    // Copy the people array in state into a new array.
+    const people = [...this.state.people];
+
+    // Update the person.
+    people[personIndex] = person;
+
     this.setState({
-      people: [
-        {id: '123', name: 'Karan Thaker', age: 25},
-        {id: '321', name: event.target.value, age: 29}
-      ]
+      people
     });
   }
 
@@ -63,6 +79,7 @@ class App extends Component {
                 name={person.name}
                 age={person.age}
                 key={person.id}
+                changed={(event) => this.nameChangedHandler(event, person.id)}
                 click={() => this.deletePersonHandler(index)} />
             );
           })}
