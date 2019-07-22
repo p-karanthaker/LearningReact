@@ -19,7 +19,8 @@ class App extends Component {
       {id: '456', name: 'Person', age: 30}
     ],
     showPeople: false,
-    showCockpit: true
+    showCockpit: true,
+    changeCounter: 0
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -64,8 +65,11 @@ class App extends Component {
     // Update the person.
     people[personIndex] = person;
 
-    this.setState({
-      people
+    this.setState((prevState, props) => {
+      return {
+        people,
+        changeCounter: prevState.changeCounter + 1
+      };
     });
   }
 
