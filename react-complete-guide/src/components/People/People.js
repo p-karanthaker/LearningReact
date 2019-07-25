@@ -1,5 +1,5 @@
-import React from "react";
-import Person from "./Person/Person";
+import React from 'react';
+import Person from './Person/Person';
 
 class People extends React.PureComponent {
   // static getDerivedStateFromProps(props, state) {
@@ -26,21 +26,21 @@ class People extends React.PureComponent {
   // }
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
-    console.log("[People.js] getSnapshotBeforeUpdate");
-    return { message: "Snapshot!" };
+    console.log('[People.js] getSnapshotBeforeUpdate');
+    return { message: 'Snapshot!' };
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log("[People.js] componentDidUpdate");
+    console.log('[People.js] componentDidUpdate');
     console.log(snapshot);
   }
 
   componentWillUnmount() {
-    console.log("[People.js] componentWillUnmount");
+    console.log('[People.js] componentWillUnmount');
   }
 
   render() {
-    console.log("[People.js] rendering...");
+    console.log('[People.js] rendering...');
     return this.props.people.map((person, index) => {
       return (
         <Person

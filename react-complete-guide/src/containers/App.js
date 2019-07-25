@@ -1,21 +1,22 @@
-import React, { Component } from "react";
-import classes from "./App.css";
-import People from "../components/People/People";
-import Cockpit from "../components/Cockpit/Cockpit";
-import Aux from "../hoc/Aux";
-import withClass from "../hoc/withClass";
+import React, { Component } from 'react';
+import classes from './App.css';
+import People from '../components/People/People';
+import Cockpit from '../components/Cockpit/Cockpit';
+import Aux from '../hoc/Aux';
+import withClass from '../hoc/withClass';
+import AuthContext from '../context/auth-context';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    console.log("[App.js] constructor");
+    console.log('[App.js] constructor');
   }
 
   state = {
     people: [
-      { id: "123", name: "Karan", age: 25 },
-      { id: "321", name: "Max", age: 28 },
-      { id: "456", name: "Person", age: 30 }
+      { id: '123', name: 'Karan', age: 25 },
+      { id: '321', name: 'Max', age: 28 },
+      { id: '456', name: 'Person', age: 30 }
     ],
     showPeople: false,
     showCockpit: true,
@@ -24,7 +25,7 @@ class App extends Component {
   };
 
   static getDerivedStateFromProps(props, state) {
-    console.log("[App.js] getDerivedStateFromProps", props);
+    console.log('[App.js] getDerivedStateFromProps', props);
     return state;
   }
 
@@ -33,15 +34,15 @@ class App extends Component {
   // }
 
   componentDidMount() {
-    console.log("[App.js] componentDidMount");
+    console.log('[App.js] componentDidMount');
   }
 
   componentDidUpdate() {
-    console.log("[App.js] componentDidUpdate");
+    console.log('[App.js] componentDidUpdate');
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    console.log("[App.js] shouldComponentUpdate");
+    console.log('[App.js] shouldComponentUpdate');
     return true;
   }
 
@@ -90,7 +91,7 @@ class App extends Component {
   };
 
   render() {
-    console.log("[App.js] render");
+    console.log('[App.js] render');
     let people = null;
 
     if (this.state.showPeople) {
@@ -113,16 +114,23 @@ class App extends Component {
         >
           Remove Cockpit
         </button>
-        {this.state.showCockpit ? (
-          <Cockpit
-            title={this.props.appTitle}
-            showPeople={this.state.showPeople}
-            peopleLength={this.state.people.length}
-            clicked={this.togglePeopleHandler}
-            login={this.loginHandler}
-          />
-        ) : null}
-        {people}
+        <AuthContext.Provider
+          value={{
+            authenticated: this.state.authenticated,
+            login: this.loginHandler
+          }}
+        >
+          {this.state.showCockpit ? (
+            <Cockpit
+              title={this.props.appTitle}
+              showPeople={this.state.showPeople}
+              peopleLength={this.state.people.length}
+              clicked={this.togglePeopleHandler}
+              login={this.loginHandler}
+            />
+          ) : null}
+          {people}
+        </AuthContext.Provider>
       </Aux>
     );
     // return React.createElement('div', {className: 'App'},
